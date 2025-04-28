@@ -1,6 +1,3 @@
---// Simples Menu Drag + Hacks (Lua) \\--
-
--- Variáveis de configuração
 local settings = {
     flyEnabled = false,
     flySpeed = 50,
@@ -11,7 +8,6 @@ local settings = {
     aimbotFOV = 90
 }
 
--- Criação da Interface (ScreenGui)
 local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local UICorner = Instance.new("UICorner")
@@ -28,7 +24,6 @@ MainFrame.Draggable = true
 
 UICorner.Parent = MainFrame
 
--- Função rápida para criar botões
 local function createButton(text, parent, position, onClick)
     local button = Instance.new("TextButton")
     button.Parent = parent
@@ -39,13 +34,12 @@ local function createButton(text, parent, position, onClick)
     button.TextColor3 = Color3.fromRGB(255,255,255)
     button.Font = Enum.Font.Gotham
     button.TextSize = 14
-    button.MouseButton1Click:Connect(onClick)
+    button.MouseButton1Click:Connect(function() onClick(button) end)
     return button
 end
 
 local yOffset = 10
 
--- Botão: Ativar/Desativar Fly
 createButton("Fly: OFF", MainFrame, UDim2.new(0, 10, 0, yOffset), function(btn)
     settings.flyEnabled = not settings.flyEnabled
     btn.Text = "Fly: " .. (settings.flyEnabled and "ON" or "OFF")
@@ -53,7 +47,6 @@ end)
 
 yOffset = yOffset + 40
 
--- Botão: Definir Fly Speed
 createButton("Fly Speed: "..settings.flySpeed, MainFrame, UDim2.new(0, 10, 0, yOffset), function(btn)
     local input = tonumber(string.match(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Chat").Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar.Text, "%d+"))
     if input then
@@ -64,7 +57,6 @@ end)
 
 yOffset = yOffset + 40
 
--- Botão: Definir Walk Speed
 createButton("Walk Speed: "..settings.walkSpeed, MainFrame, UDim2.new(0, 10, 0, yOffset), function(btn)
     local input = tonumber(string.match(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Chat").Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar.Text, "%d+"))
     if input then
@@ -76,7 +68,6 @@ end)
 
 yOffset = yOffset + 40
 
--- Botão: Definir Jump Power
 createButton("Jump Power: "..settings.jumpPower, MainFrame, UDim2.new(0, 10, 0, yOffset), function(btn)
     local input = tonumber(string.match(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Chat").Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar.Text, "%d+"))
     if input then
@@ -88,7 +79,6 @@ end)
 
 yOffset = yOffset + 40
 
--- Botão: Ativar/Desativar Noclip
 createButton("Noclip: OFF", MainFrame, UDim2.new(0, 10, 0, yOffset), function(btn)
     settings.noclipEnabled = not settings.noclipEnabled
     btn.Text = "Noclip: " .. (settings.noclipEnabled and "ON" or "OFF")
@@ -96,7 +86,6 @@ end)
 
 yOffset = yOffset + 40
 
--- Botão: Ativar/Desativar Aimbot
 createButton("Aimbot: OFF", MainFrame, UDim2.new(0, 10, 0, yOffset), function(btn)
     settings.aimbotEnabled = not settings.aimbotEnabled
     btn.Text = "Aimbot: " .. (settings.aimbotEnabled and "ON" or "OFF")
@@ -104,7 +93,6 @@ end)
 
 yOffset = yOffset + 40
 
--- Botão: Definir FOV Aimbot
 createButton("Aimbot FOV: "..settings.aimbotFOV, MainFrame, UDim2.new(0, 10, 0, yOffset), function(btn)
     local input = tonumber(string.match(game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Chat").Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar.Text, "%d+"))
     if input then
@@ -113,7 +101,6 @@ createButton("Aimbot FOV: "..settings.aimbotFOV, MainFrame, UDim2.new(0, 10, 0, 
     end
 end)
 
--- Funções de Fly e Noclip
 game:GetService("RunService").Stepped:Connect(function()
     local player = game.Players.LocalPlayer
     local humanoid = player.Character and player.Character:FindFirstChildWhichIsA("Humanoid")
@@ -135,11 +122,8 @@ game:GetService("RunService").Stepped:Connect(function()
     end
 end)
 
--- Função simples de Aimbot (somente exemplo básico)
 game:GetService("RunService").RenderStepped:Connect(function()
     if settings.aimbotEnabled then
-        -- Aqui você pode fazer seu algoritmo de mirar no inimigo mais próximo dentro do FOV
+        -- Aimbot básico preparado (adicione a função para mirar)
     end
 end)
-
-print("Script iniciado com sucesso!")
